@@ -2,10 +2,10 @@ module Main where
 
 import Syntax
 import Parser
-import Printer
-import Bigstep
+import Interpreter
 
-import Debug.Trace
+import qualified Data.Map as Map
+
 import Control.Monad.IO.Class
 
 import System.Environment
@@ -23,10 +23,6 @@ parseFile file =
        Left e  -> print e >> fail "parse error"
        Right r -> return r
 
-exec :: Stmt -> Stmt
-exec Skip = Skip
-exec stmt = trace ("-- Trace: " ++ show stmt ++ "\n") $ exec (eval stmt)
-
 main :: IO ()
 main = do
   args <- getArgs
@@ -34,4 +30,4 @@ main = do
      then putStrLn "No input file."
      else do
        ast <- parseFile $ head args
-       print $ exec ast
+       print $ Map.toList $ interpret ast
