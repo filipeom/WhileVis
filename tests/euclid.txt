@@ -1,0 +1,8 @@
+r' := a; r := b;
+s' := 1; s := 0;
+t' := 0; t := 1;
+while r > 0 do
+  q := r' / r;
+  r' := r; r := r' - q * r;
+  s' := s; s := s' - q * s;
+  t' := t; t := t' - q * t
