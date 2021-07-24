@@ -1,11 +1,13 @@
-CC = ghc
+HC 		 = ghc
+SRC    = src
+TARGET = Main
 
-SRC := $(wildcard *.hs)
+SRCS := $(wildcard $(SRC)/*.hs)
 
 .PHONY: clean
 
-Main: $(SRC)
-	$(CC) $^
+$(TARGET): $(SRCS)
+	@echo "$(HC) $^ -o $@"; $(HC) $^ -o $@
 
-clean: $(SRC:.hs=.o) $(SRC:.hs=.hi) Main
+clean: $(SRCS:.hs=.o) $(SRCS:.hs=.hi) $(TARGET)
 	$(RM) $^
