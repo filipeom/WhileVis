@@ -11,7 +11,7 @@ aeval expr st =
   case expr of
     Var x                  -> st ! x
     IntConst i             -> i
-    Neg a                  -> -(aeval a st)
+    Neg a                  -> negate (aeval a st)
     ABinary Add      a1 a2 -> (aeval a1 st) + (aeval a2 st)
     ABinary Subtract a1 a2 -> (aeval a1 st) - (aeval a2 st)
     ABinary Multiply a1 a2 -> (aeval a1 st) * (aeval a2 st)
@@ -35,8 +35,7 @@ exec stmt st =
     Seq (c1, c2)   -> exec c2 (exec c1 st)
     If b c1 c2     -> if (beval b st) then exec c1 st
                                       else exec c2 st
-    While b c      -> if (beval b st) then exec (Seq (c, While b c)) st
-                                      else st
+    While b c      -> exec (If b (Seq (c, While b c)) Skip) st
 
 interpret :: Stmt -> Valuation
 interpret stmt = exec stmt empty

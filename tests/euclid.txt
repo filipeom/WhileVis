@@ -1,5 +1,5 @@
 // euclidian extended algorithm
-r' := 12; r := 8;
+r' := 7; r := 4;
 s' := 1; s := 0;
 t' := 0; t := 1;
 while r > 0 do
